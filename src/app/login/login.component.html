@@ -1,0 +1,14 @@
+<div id="caixa-principal">
+    <header>
+        Login
+    </header>
+    <form [formGroup]="loginForm" (ngSubmit)="envioDoForm()">
+        <label>Email</label>
+        <input type="email">
+        <div class="d-flex justify-content-between align-items-center">
+            <label>Senha</label>
+            <label (click)="esqueciSenha()">Esqueceu a Senha?</label>
+        </div>
+        <input type="password">
+    </form>
+</div>
