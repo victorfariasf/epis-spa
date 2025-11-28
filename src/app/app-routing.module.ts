@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { LayoutPrincipalComponent } from './layout/layout-principal/layout-principal.component';
+import { CalendarComponent } from './calendar/calendar.component';
 //import { pathToFileURL } from 'url';
 
 const routes: Routes = [
@@ -11,7 +12,9 @@ const routes: Routes = [
   {path: 'auth/register', component: RegisterComponent},
   {path: 'main', component: LayoutPrincipalComponent, children: [
     {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-  ]}
+  ]},
+    { path: 'calendar', component: CalendarComponent },
+  { path: '**', redirectTo: '/calendar' }
 ];
 
 @NgModule({

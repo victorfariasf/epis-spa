@@ -1,0 +1,62 @@
+.calendar-page{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-top: 10vh;
+    background-color: #1A1A1A;
+}
+.calendar-main{
+   width: 90%;
+   max-width: 150rem;   /* ocupa toda largura do pai */
+  margin: 0 auto;   /* centraliza horizontalmente */
+  height: 90%;
+}
+.calendar-main ::ng-deep .fc {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem; /* base para todo o calendário */
+}
+.calendar-main ::ng-deep .fc-toolbar {
+  background-color: #1A1A1A; /* fundo da barra de navegação */
+  color: white; /* texto da barra */
+  border-radius: 10px 10px 0 0;
+}
+.calendar-main ::ng-deep .fc-toolbar-title {
+  color: white; /* título do mês */
+}
+.calendar-main ::ng-deep .fc-col-header-cell {
+  background-color: #e0e0e0;
+  color: #0B1EFE;                /* cor do texto */
+  font-weight: bold;
+  font-size: 1.5rem;          /* tamanho da fonte */
+  font-family: 'Inter', sans-serif; /* fonte */
+  height: 60px;               /* altura da célula */
+  line-height: 60px;          /* centraliza verticalmente o texto */
+  padding: 0;                 /* remove padding interno que pode atrapalhar */
+  text-align: center;         /* centraliza horizontalmente */
+}
+.calendar-main ::ng-deep .fc-daygrid-day {
+  height: 2rem;              /* altura da célula do dia */
+}
+
+.calendar-main ::ng-deep .fc-daygrid-day-number {
+  font-size: 1.2rem;          /* tamanho do número do dia */
+  font-family: 'Inter', sans-serif;
+  color: white; 
+  text-decoration: none;
+}
+.calendar-main ::ng-deep .fc-daygrid-day-number a {
+  text-decoration: none; /* remove underline */
+  color: inherit;        /* mantém a cor definida */
+  cursor: default;       /* opcional: remove cursor de link */
+}
+.calendar-main ::ng-deep .fc-col-header-cell a {
+  text-decoration: none; /* remove underline */
+  color: inherit;
+  cursor: default;
+}
+.calendar-main ::ng-deep .fc-day-today {
+  background-color: #acb2eebb; /* cor de fundo desejada */
+  border-radius: 6px;        /* opcional, deixa arredondado */
+}
