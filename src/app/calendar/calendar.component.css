@@ -11,7 +11,8 @@
    width: 90%;
    max-width: 150rem;   /* ocupa toda largura do pai */
   margin: 0 auto;   /* centraliza horizontalmente */
-  height: 90%;
+  height: 100%;
+  max-height: 100vw;
 }
 .calendar-main ::ng-deep .fc {
   font-family: 'Inter', sans-serif;
@@ -57,6 +58,26 @@
   cursor: default;
 }
 .calendar-main ::ng-deep .fc-day-today {
-  background-color: #acb2eebb; /* cor de fundo desejada */
-  border-radius: 6px;        /* opcional, deixa arredondado */
+  background-color: #2f3d66; /* cor de fundo desejada */
+  border-radius: 6px;
+  color: white;      
+}
+
+:host ::ng-deep .fc-timegrid-slot-label-cushion {
+  color: white !important;
+  font-size: 1.5rem; 
+  text-align: center;
+  font-family: 'Montserrat', sans-serif;
+}
+:host ::ng-deep .fc-timegrid-slot-label-cushion{
+  padding: 1rem;
+}
+:host ::ng-deep .fc-timegrid-axis {
+  width: 5rem !important; /* ajuste aqui */
+  
+}
+
+/* frame interno da coluna da hora */
+:host ::ng-deep .fc-timegrid-axis-frame {
+ 
 }

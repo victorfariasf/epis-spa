@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 import { CalendarOptions, DatesSetArg, DayHeaderContentArg } from '@fullcalendar/core';
+import timeGridPlugin from '@fullcalendar/timegrid';
 
 
 
@@ -9,7 +10,7 @@ import { CalendarOptions, DatesSetArg, DayHeaderContentArg } from '@fullcalendar
 const ptBrCustom = {
   code: 'pt-br-custom',
   week: {
-    dow: 1, // semana começa na segunda-feira
+    dow: 0, // semana começa na segunda-feira
     doy: 4
   },
   buttonText: {
@@ -41,47 +42,74 @@ const ptBrCustom = {
 export class CalendarComponent {
   // Tipando como 'any' para evitar erro
   calendarOptions: any = {
-    plugins: [dayGridPlugin],
-    initialView: 'dayGridMonth',
+      plugins: [dayGridPlugin, timeGridPlugin],
+      initialView: 'dayGridMonth',
       buttonText: {       // redefine os textos dos botões
-    today: 'Hoje',
-    month: 'Mês',
-    week: 'Semana',
-    day: 'Dia',
-    prev: 'Anterior',
-    next: 'Próximo'
+      today: 'Hoje',
+      month: 'Mês',
+      week: 'Semana',
+      day: 'Dia',
+      prev: 'Anterior',
+      next: 'Próximo'
+    },
+    locale: ptBrLocale,
+    allDaySlot: false,
+    // intervalo de horários exibidos
+  slotMinTime: '00:00:00',
+  slotMaxTime: '24:00:00',
+  // tamanho dos blocos de hora
+  slotDuration: '01:00:00',
+    // 👉 FORMATO DA HORA PERSONALIZADO
+  slotLabelContent: (arg: any) => {
+    const hora = arg.date.getHours();
+    const minutos = arg.date.getMinutes().toString().padStart(2, '0');
+    return `${hora}h:${minutos}`;
   },
-    locale: ptBrLocale,  // ✅ aqui só passar a string
     events: [
-      { title: 'aula de aps', date: '2025-11-11' },
-      { title: 'aula de talf', date: '2025-11-11' },
-      { title: 'Evento 1', date: '2025-12-05' },
-      { title: 'Evento 2', date: '2025-12-10' }
+        { title: 'Aula de APS', start: '2025-11-27T08:00:00', end: '2025-11-27T12:00:00' },
+  { title: 'Aula de TALF', start: '2025-11-27T11:00:00', end: '2025-11-11T12:30:00' },
+  { title: 'Aula de TALF', start: '2025-11-27T11:00:00', end: '2025-11-11T12:30:00' },
+  { title: 'Evento 1', start: '2025-12-05T09:00:00', end: '2025-12-05T11:00:00' },
+  { title: 'Evento 2', start: '2025-12-10T14:00:00', end: '2025-12-10T15:30:00' },
+   { title: 'Aula de APS', start: '2025-11-28T07:00:00', end: '2025-11-28T8:00:00' },
     ],
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
-      right: 'dayGridMonth,dayGridWeek,dayGridDay'
+      right: 'dayGridMonth,timeGridWeek,timeGridDay'
     },
+      views: {
+    dayGridMonth: {
+      firstDay: 0 // domingo
+    },
+    timeGridWeek: {
+      firstDay: 1 // segunda-feira
+    },
+    timeGridDay: {
+      firstDay: 1 // segunda-feira
+    }
+  },
     dayHeaderContent: (args: DayHeaderContentArg) => {
-  const dias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
-  const diaSemana = dias[args.date.getDay()];
-  const numeroDia = args.date.getDate();
+    const diasMes = ['Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb','Dom'];
+    const dias = ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb'];
+    const diaSemana = dias[args.date.getDay()];
+    const diaMes = diasMes[args.date.getDay()];
+    const numeroDia = args.date.getDate();
 
   // args.view.type -> identifica a view atual: 'dayGridMonth', 'timeGridWeek', 'timeGridDay', etc
-  if (args.view.type === 'dayGridMonth') {
-    // modo mensal: apenas abreviado do dia
-    return diaSemana;
-  } else {
-    // modo semanal ou diário: dia + número
-    return { html: `
-      <div style="text-align:center; margin:0; line-height:1;">
-        <span style="display:block; font-size:1rem; margin:0;">${diaSemana}</span>
-        <span style="display:block; font-size:2rem; font-weight:bold; margin:0;">${numeroDia}</span>
-      </div>
-    `};
-  }
-},
+    if (args.view.type === 'dayGridMonth') {
+      // modo mensal: apenas abreviado do dia
+      return diaMes;
+    } else {
+      // modo semanal ou diário: dia + número
+      return { html: `
+        <div style="text-align:center; margin:0; line-height:1;">
+          <span style="display:block; font-size:1rem; margin:0;">${diaSemana}</span>
+          <span style="display:block; font-size:2rem; font-weight:bold; margin:0;">${numeroDia}</span>
+        </div>
+      `};
+    }
+  },
   titleFormat: {
   year: 'numeric',
   month: 'long'
