@@ -1,1 +1,36 @@
 /* You can add global styles to this file, and also import other style files */
+body{
+    font-family: "Montserrat", sans-serif !important;
+}
+
+
+
+h1, h2, h3, h4, h5, h6, h7, h8, h9{
+    font-family: "PT Serif Caption", serif !important;
+}
+
+.epis-btn{
+    background-color: #0B1EFE !important;
+    color: #FCFCFD !important;
+    font-family: "Montserrat", sans-serif !important;
+}
+
+a{
+    font-family: "Montserrat", sans-serif !important;
+    color: #2C3AD5 !important;
+    font-size: 1em !important;
+    font-weight: 600;
+}
+
+a:hover{
+    cursor: pointer;
+}
+
+input{
+    height: 48px !important;
+    font-family: "Montserrat", sans-serif !important;
+    vertical-align: middle !important;
+    padding: 8px;
+    border: 1px solid rgba(0, 0, 0, 0.459) !important;
+
+}
