@@ -1,5 +1,13 @@
 <div class="calendar-page">
-    <div class="calendar-main">
-         <full-calendar [options]="calendarOptions"></full-calendar>
+    <div class="calendar-itens">
+        <div class="calendar-header">
+        <img src="assets/images/episTexto.svg" alt="Logo" width="100">
+        <img src="assets/images/episLogo.svg" alt="Logo" width="100">
+        <img class="calendar-header-item" (click)="toggleContrast()" src="assets/images/acessibilidade.svg" alt="acessibilidade" width="100">
+        <img class="calendar-header-item" src="assets/images/perfil.svg" alt="perfil" width="75">
+        </div>
+        <div class="calendar-main">
+            <full-calendar [options]="calendarOptions"></full-calendar>
+        </div>
     </div>
 </div>

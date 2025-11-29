@@ -1,11 +1,38 @@
+/* Modo normal */
+:host {
+  --bg-color: #1A1A1A;
+  --text-color: #fff;
+}
+
+/* Modo de alto contraste */
+:host(.high-contrast) {
+  --bg-color: #fff;   /* fundo branco */
+  --text-color: #000; /* texto preto */
+}
+
 .calendar-page{
-    display: flex;
-    align-items: center;
-    justify-content: center;
     width: 100%;
     height: 100%;
     margin-top: 10vh;
-    background-color: #1A1A1A;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+}
+.calendar-itens{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.calendar-header{
+  display: flex;
+  width: 90%;
+  align-items: center;
+  justify-content: end;
+  gap: 1rem;
+}
+.calendar-header-item{
+  cursor: pointer;
 }
 .calendar-main{
    width: 90%;
@@ -13,6 +40,8 @@
   margin: 0 auto;   /* centraliza horizontalmente */
   height: 100%;
   max-height: 100vw;
+  background-color: var(--bg-color);
+    color: var(--text-color);
 }
 .calendar-main ::ng-deep .fc {
   font-family: 'Inter', sans-serif;

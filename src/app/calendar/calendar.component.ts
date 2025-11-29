@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Renderer2, ElementRef } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 import { CalendarOptions, DatesSetArg, DayHeaderContentArg } from '@fullcalendar/core';
@@ -40,6 +40,20 @@ const ptBrCustom = {
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent {
+
+  highContrast = false;
+
+  constructor(private el: ElementRef, private renderer: Renderer2) {}
+
+  toggleContrast() {
+    this.highContrast = !this.highContrast;
+    if (this.highContrast) {
+      this.renderer.addClass(this.el.nativeElement, 'high-contrast');
+    } else {
+      this.renderer.removeClass(this.el.nativeElement, 'high-contrast');
+    }
+  }
+
   // Tipando como 'any' para evitar erro
   calendarOptions: any = {
       plugins: [dayGridPlugin, timeGridPlugin],
