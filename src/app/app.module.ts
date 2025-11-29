@@ -11,6 +11,7 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarComponent } from './calendar/calendar.component';
+import { AccessibilityButtonComponent } from './accessibility-button/accessibility-button.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import { CalendarComponent } from './calendar/calendar.component';
     LayoutPrincipalComponent,
     LoginComponent,
     RegisterComponent,
-    CalendarComponent
+    CalendarComponent,
+    AccessibilityButtonComponent
   ],
   imports: [
     BrowserModule,

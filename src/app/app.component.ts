@@ -15,4 +15,5 @@ export class AppComponent {
       { title: 'Evento 1', date: '2025-12-05' }
     ]
   };
+  AccessibilityButtonComponent:any;
 }

@@ -2,12 +2,29 @@
 :host {
   --bg-color: #1A1A1A;
   --text-color: #fff;
+  --calendar-button:#0B1EFE;
+  --calendar-button-selected:#0717c5;
+  --calendar-button-text:white;
+  --blue-textColor:#0B1EFE;
+  --day-number-color:white;
+  --bg-day-today-color:#2f3d66;
+  --event-color:none;
+  --event-bg-color:none;
 }
 
 /* Modo de alto contraste */
 :host(.high-contrast) {
-  --bg-color: #fff;   /* fundo branco */
+  --blue-textColor:#000;
   --text-color: #000; /* texto preto */
+  --calendar-button:white;
+  --calendar-button-selected:#bbbbbb;
+  --calendar-button-text:#000;
+  --blue-textColor:#000;
+  --day-number-color:white;
+  --bg-day-today-color:#5f5f5f;
+   --event-color:white;
+    --event-bg-color:#383838;
+
 }
 
 .calendar-page{
@@ -34,6 +51,29 @@
 .calendar-header-item{
   cursor: pointer;
 }
+
+/* Aplica a todos os botões da toolbar */
+:host ::ng-deep .fc .fc-toolbar button {
+  background-color: var(--calendar-button); /* cor de fundo */
+  color: var(--calendar-button-text);               /* cor do texto */
+  border: none;               /* remove borda padrão */
+  padding: 0.5rem 1rem;       /* espaçamento interno */
+  border-radius: 5px;         /* cantos arredondados */
+  font-weight: bold;
+  cursor: pointer;
+}
+
+/* Botão ao passar o mouse */
+:host ::ng-deep .fc .fc-toolbar button:hover {
+  background-color: var(--calendar-button-selected);
+}
+
+/* Botão ativo (por exemplo, a view selecionada) */
+:host ::ng-deep .fc .fc-toolbar button.fc-button-active {
+  background-color: var(--calendar-button-selected);
+  color: var(--calendar-button-text);
+}
+
 .calendar-main{
    width: 90%;
    max-width: 150rem;   /* ocupa toda largura do pai */
@@ -57,7 +97,7 @@
 }
 .calendar-main ::ng-deep .fc-col-header-cell {
   background-color: #e0e0e0;
-  color: #0B1EFE;                /* cor do texto */
+  color: var( --blue-textColor);                /* cor do texto */
   font-weight: bold;
   font-size: 1.5rem;          /* tamanho da fonte */
   font-family: 'Inter', sans-serif; /* fonte */
@@ -73,7 +113,7 @@
 .calendar-main ::ng-deep .fc-daygrid-day-number {
   font-size: 1.2rem;          /* tamanho do número do dia */
   font-family: 'Inter', sans-serif;
-  color: white; 
+  color: var(--day-number-color); 
   text-decoration: none;
 }
 .calendar-main ::ng-deep .fc-daygrid-day-number a {
@@ -87,9 +127,25 @@
   cursor: default;
 }
 .calendar-main ::ng-deep .fc-day-today {
-  background-color: #2f3d66; /* cor de fundo desejada */
+  background-color: var(--bg-day-today-color); /* cor de fundo desejada */
   border-radius: 6px;
   color: white;      
+}
+.calendar-main ::ng-deep .fc-daygrid-event-dot {
+  border-color: var(--event-color) !important; /* cor do círculo */
+  background-color: var(--event-color) !important;
+}
+.calendar-main ::ng-deep .fc-event-title,
+.calendar-main ::ng-deep .fc-event-time {
+  color: var(--event-color) !important; /* cor da fonte */
+}
+.calendar-main ::ng-deep .fc-timegrid-event .fc-event-main {
+  background-color: var(--event-bg-color) !important;
+  color: white !important; /* texto da caixa de evento */
+  border: var(--event-bg-color);
+}
+.calendar-main ::ng-deep .fc-v-event{
+  border: var(--event-bg-color);
 }
 
 :host ::ng-deep .fc-timegrid-slot-label-cushion {

@@ -1,58 +1,43 @@
-import { Component, Renderer2, ElementRef } from '@angular/core';
+import { Component, Renderer2, ElementRef, OnInit } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 import { CalendarOptions, DatesSetArg, DayHeaderContentArg } from '@fullcalendar/core';
 import timeGridPlugin from '@fullcalendar/timegrid';
 
 
-
-
-const ptBrCustom = {
-  code: 'pt-br-custom',
-  week: {
-    dow: 0, // semana começa na segunda-feira
-    doy: 4
-  },
-  buttonText: {
-    prev: 'Anterior',
-    next: 'Próximo',
-    today: 'Hoje',
-    month: 'Mês',
-    week: 'Semana',
-    day: 'Dia'
-  },
-  weekText: 'Sm',
-  allDayText: 'Dia todo',
-  moreLinkText: 'mais',
-  noEventsText: 'Não há eventos',
-  // Aqui você pode sobrescrever manualmente os nomes dos meses e dias
-  monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho',
-               'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'],
-  monthNamesShort: ['Jan', 'Fev', 'Mar', 'Abr', 'Mai', 'Jun',
-                    'Jul', 'Ago', 'Set', 'Out', 'Nov', 'Dez'],
-  dayNames: ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'],
-  dayNamesShort: ['Dom', 'Seg', 'Ter', 'Qua', 'Qui', 'Sex', 'Sáb']
-};
-
 @Component({
   selector: 'app-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent {
+export class CalendarComponent implements OnInit {
 
   highContrast = false;
 
   constructor(private el: ElementRef, private renderer: Renderer2) {}
 
-  toggleContrast() {
-    this.highContrast = !this.highContrast;
-    if (this.highContrast) {
+    ngOnInit() {
+    // Lê o estado salvo no navegador
+    const savedContrast = localStorage.getItem('highContrast');
+    if (savedContrast === 'true') {
+      this.highContrast = true;
+      this.renderer.addClass(document.body, 'high-contrast');
       this.renderer.addClass(this.el.nativeElement, 'high-contrast');
-    } else {
-      this.renderer.removeClass(this.el.nativeElement, 'high-contrast');
     }
   }
+
+  toggleContrast(state: boolean) {
+    this.highContrast = state;
+    if (state) {
+       document.body.classList.add('high-contrast');
+      this.renderer.addClass(this.el.nativeElement, 'high-contrast');
+    } else {
+      document.body.classList.remove('high-contrast');
+      this.renderer.removeClass(this.el.nativeElement, 'high-contrast');
+    }
+    localStorage.setItem('highContrast', String(state));
+  }
+  
 
   // Tipando como 'any' para evitar erro
   calendarOptions: any = {
