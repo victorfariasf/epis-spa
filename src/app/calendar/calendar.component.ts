@@ -1,9 +1,14 @@
-import { Component, Renderer2, ElementRef, OnInit } from '@angular/core';
+import { Component, Renderer2, ElementRef, OnInit, ViewChild } from '@angular/core';
 import dayGridPlugin from '@fullcalendar/daygrid';
 import ptBrLocale from '@fullcalendar/core/locales/pt-br';
 import { CalendarOptions, DatesSetArg, DayHeaderContentArg } from '@fullcalendar/core';
 import timeGridPlugin from '@fullcalendar/timegrid';
+import { EventInput } from '@fullcalendar/core';
+import { FullCalendarComponent } from '@fullcalendar/angular';
 
+interface AppEvent extends EventInput {
+  // title?: string; start?: string | Date; end?: string | Date; color?: string; etc.
+}
 
 @Component({
   selector: 'app-calendar',
@@ -11,6 +16,24 @@ import timeGridPlugin from '@fullcalendar/timegrid';
   styleUrls: ['./calendar.component.css']
 })
 export class CalendarComponent implements OnInit {
+   @ViewChild('fullcalendar') fullcalendar!: FullCalendarComponent;
+
+    showModal = false;
+
+  // dados do novo evento
+  newEvent: {
+  title: string;
+  startDate: string;
+  startTime: string;
+  endDate?: string;
+  endTime?: string;
+  } = {
+    title: '',
+    startDate: '',
+    startTime: '',
+    endDate: '',
+    endTime: ''
+  };
 
   highContrast = false;
 
@@ -37,6 +60,11 @@ export class CalendarComponent implements OnInit {
     }
     localStorage.setItem('highContrast', String(state));
   }
+   eventsArray: EventInput[] = [
+    { title: 'Aula de APS', start: '2025-11-27T08:00:00', end: '2025-11-27T12:00:00' },
+    { title: 'Evento rápido', start: '2025-12-05T09:30:00' }, // sem end = duração padrão (depende)
+    { title: 'Dia inteiro', start: '2025-12-10', allDay: true } // all-day
+  ];
   
 
   // Tipando como 'any' para evitar erro
@@ -64,14 +92,7 @@ export class CalendarComponent implements OnInit {
     const minutos = arg.date.getMinutes().toString().padStart(2, '0');
     return `${hora}h:${minutos}`;
   },
-    events: [
-        { title: 'Aula de APS', start: '2025-11-27T08:00:00', end: '2025-11-27T12:00:00' },
-  { title: 'Aula de TALF', start: '2025-11-27T11:00:00', end: '2025-11-11T12:30:00' },
-  { title: 'Aula de TALF', start: '2025-11-27T11:00:00', end: '2025-11-11T12:30:00' },
-  { title: 'Evento 1', start: '2025-12-05T09:00:00', end: '2025-12-05T11:00:00' },
-  { title: 'Evento 2', start: '2025-12-10T14:00:00', end: '2025-12-10T15:30:00' },
-   { title: 'Aula de APS', start: '2025-11-28T07:00:00', end: '2025-11-28T8:00:00' },
-    ],
+   
     headerToolbar: {
       left: 'prev,next today',
       center: 'title',
@@ -127,5 +148,66 @@ export class CalendarComponent implements OnInit {
       }
     }
   };
+    addEvent() {
+    const api = this.fullcalendar.getApi();
+    api.addEvent({ title: 'Novo', start: new Date(), end: new Date(Date.now() + 3600_000) });
+    // ou também: this.eventsArray.push({...}); Angular atualizará o calendário automaticamente
+  }
+   openModal() {
+    this.showModal = true;
+    this.newEvent = {
+      title: '',
+      startDate: '',
+      startTime: '',
+      endDate: '',
+      endTime: ''
+    };
+  }
+
+  closeModal() {
+      this.showModal = false;
+    }
+
+   saveEvent() {
+    if (!this.newEvent.title || !this.newEvent.startDate || !this.newEvent.startTime) {
+      alert('Preencha ao menos título, data e hora de início.');
+      return;
+    }
+
+    // Se não houver data final, assume apenas o dia de início
+    const startDate = new Date(this.newEvent.startDate);
+    const endDate = this.newEvent.endDate ? new Date(this.newEvent.endDate) : startDate;
+
+    // Array para guardar os eventos
+    const eventsToAdd: EventInput[] = [];
+
+    // Loop de cada dia
+    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
+      // Formata o dia atual
+      const yyyy = d.getFullYear();
+      const mm = String(d.getMonth() + 1).padStart(2, '0');
+      const dd = String(d.getDate()).padStart(2, '0');
+
+      console.log("yy"+yyyy+"mm"+ mm +"dd"+dd)
+
+      // Combina com as horas fornecidas
+      const start = `${yyyy}-${mm}-${dd}T${this.newEvent.startTime}`;
+      const end = this.newEvent.endTime ? `${yyyy}-${mm}-${dd}T${this.newEvent.endTime}` : undefined;
+
+      eventsToAdd.push({
+        title: this.newEvent.title,
+        start: start,
+        end: end
+      });
+    }
+
+    // Adiciona todos os eventos no array e no calendário
+    this.eventsArray.push(...eventsToAdd);
+
+    const api = this.fullcalendar.getApi();
+    eventsToAdd.forEach(ev => api.addEvent(ev));
+
+    this.closeModal();
+  }
 }
 

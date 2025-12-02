@@ -78,11 +78,19 @@
    width: 90%;
    max-width: 150rem;   /* ocupa toda largura do pai */
   margin: 0 auto;   /* centraliza horizontalmente */
-  height: 100%;
+  height: 90%;
   max-height: 100vw;
   background-color: var(--bg-color);
     color: var(--text-color);
 }
+.calendar-main ::ng-deep .fc-timeGridWeek .fc-timegrid-body,
+.calendar-main ::ng-deep .fc-timeGridDay .fc-timegrid-body {
+    overflow-y: hidden !important;
+}
+.calendar-main ::ng-deep .fc .fc-scroller-liquid-absolute{
+  position: inherit;
+}
+
 .calendar-main ::ng-deep .fc {
   font-family: 'Inter', sans-serif;
   font-size: 1rem; /* base para todo o calendário */
@@ -165,4 +173,96 @@
 /* frame interno da coluna da hora */
 :host ::ng-deep .fc-timegrid-axis-frame {
  
+}
+
+/*MODAL*/
+
+.btn-add-event {
+  padding: 10px 20px;
+  background: #0B1EFE;
+  color: white;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 15px;
+}
+
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 25px;
+  border-radius: 10px;
+  width: 40%;
+  max-width: 30vw;
+  height: 68%;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.modal input {
+  padding: 8px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+}
+.modal-title{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-text{
+   color: black;
+  
+}
+.modal-section{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.modal-item{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+}
+.modal-actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: auto; 
+
+}
+
+.btn-cancel {
+  background: gray;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.btn-save {
+  background: #0B1EFE;
+  color: white;
+  padding: 8px 15px;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
 }

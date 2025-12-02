@@ -12,6 +12,7 @@ import { RegisterComponent } from './register/register.component';
 import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarComponent } from './calendar/calendar.component';
 import { AccessibilityButtonComponent } from './accessibility-button/accessibility-button.component';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -28,6 +29,7 @@ import { AccessibilityButtonComponent } from './accessibility-button/accessibili
     NgbModalModule,
     ReactiveFormsModule,
     FullCalendarModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
