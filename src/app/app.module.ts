@@ -13,6 +13,7 @@ import { FullCalendarModule } from '@fullcalendar/angular';
 import { CalendarComponent } from './calendar/calendar.component';
 import { AccessibilityButtonComponent } from './accessibility-button/accessibility-button.component';
 import { FormsModule } from '@angular/forms';
+import { EventViewComponent } from './event-view/event-view.component';
 
 @NgModule({
   declarations: [
@@ -21,7 +22,8 @@ import { FormsModule } from '@angular/forms';
     LoginComponent,
     RegisterComponent,
     CalendarComponent,
-    AccessibilityButtonComponent
+    AccessibilityButtonComponent,
+    EventViewComponent
   ],
   imports: [
     BrowserModule,

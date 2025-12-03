@@ -19,6 +19,9 @@ export class CalendarComponent implements OnInit {
    @ViewChild('fullcalendar') fullcalendar!: FullCalendarComponent;
 
     showModal = false;
+    showViewModal = false;
+    editVisible = false;
+    selectedEvent: any = null;  
 
   // dados do novo evento
   newEvent: {
@@ -34,6 +37,19 @@ export class CalendarComponent implements OnInit {
     endDate: '',
     endTime: ''
   };
+
+  compareDates(d1: Date | string | null, d2: Date | string | null): boolean {
+  if (!d1 || !d2) return false;
+
+  const date1 = new Date(d1);
+  const date2 = new Date(d2);
+
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
+}
 
   highContrast = false;
 
@@ -63,7 +79,8 @@ export class CalendarComponent implements OnInit {
    eventsArray: EventInput[] = [
     { title: 'Aula de APS', start: '2025-11-27T08:00:00', end: '2025-11-27T12:00:00' },
     { title: 'Evento rápido', start: '2025-12-05T09:30:00' }, // sem end = duração padrão (depende)
-    { title: 'Dia inteiro', start: '2025-12-10', allDay: true } // all-day
+    { title: 'Dia inteiro', start: '2025-12-10', allDay: true }, // all-day
+    { title: 'Aula de matematica', start: '2025-12-03T08:00:00', end: '2025-12-03T09:00:00' }
   ];
   
 
@@ -146,8 +163,19 @@ export class CalendarComponent implements OnInit {
         const year = date.getFullYear();
         header.textContent = `${month} de ${year}`; // sobrescreve corretamente
       }
-    }
+    },eventClick: (arg: any) => {
+  this.selectedEvent = {
+    title: arg.event.title,
+    start: arg.event.start,
+    end: arg.event.end
   };
+  this.showViewModal = true; // agora ele abre o EventViewComponent
+}
+
+
+
+  };
+  
     addEvent() {
     const api = this.fullcalendar.getApi();
     api.addEvent({ title: 'Novo', start: new Date(), end: new Date(Date.now() + 3600_000) });
@@ -163,6 +191,19 @@ export class CalendarComponent implements OnInit {
       endTime: ''
     };
   }
+  openEditModal(event: any) {
+  this.showViewModal = false;   // fecha modal de visualização
+  this.editVisible = true;      // abre modal de edição
+
+  // Preenche os campos do formulário com os dados do evento
+  this.newEvent = {
+    title: event.title,
+    startDate: event.start ? event.start.toISOString().substring(0, 10) : '',
+    endDate: event.end ? event.end.toISOString().substring(0, 10) : '',
+    startTime: event.start ? event.start.toTimeString().substring(0, 5) : '',
+    endTime: event.end ? event.end.toTimeString().substring(0, 5) : ''
+  };
+}
 
   closeModal() {
       this.showModal = false;

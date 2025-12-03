@@ -10,7 +10,8 @@
         <button class="btn-add-event" (click)="openModal()">Criar Evento</button>
     </div>
 
-<!-- Modal -->
+
+<!-- Modal criar evento -->
         <div class="modal-overlay" *ngIf="showModal">
             <div class="modal">
                 <div class="modal-title">
@@ -38,6 +39,12 @@
                 </div>
             </div>
         </div>
+        <app-event-view 
+            [event]="selectedEvent" 
+            [visible]="showViewModal"
+            (close)="showViewModal = false"
+            (edit)="openEditModal($event)">
+        </app-event-view>
         <div class="calendar-main">
             <full-calendar
              #fullcalendar 
