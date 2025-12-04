@@ -14,6 +14,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { AccessibilityButtonComponent } from './accessibility-button/accessibility-button.component';
 import { FormsModule } from '@angular/forms';
 import { EventViewComponent } from './event-view/event-view.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { EventViewComponent } from './event-view/event-view.component';
     ReactiveFormsModule,
     FullCalendarModule,
     FormsModule,
+    BrowserAnimationsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

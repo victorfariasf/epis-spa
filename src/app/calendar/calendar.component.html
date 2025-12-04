@@ -1,17 +1,11 @@
 <div class="calendar-page">
     <div class="calendar-itens">
         <div class="calendar-header">
-        <img src="assets/images/episTexto.svg" alt="Logo" width="100">
-        <img src="assets/images/episLogo.svg" alt="Logo" width="100">
-        <app-accessibility-button 
-         (contrastToggle)="toggleContrast($event)">
-        </app-accessibility-button>
-        <img class="calendar-header-item" src="assets/images/perfil.svg" alt="perfil" width="75">
-        <button class="btn-add-event" (click)="openModal()">Criar Evento</button>
-    </div>
+            <button class="btn-add-event" (click)="openModal()">Criar Evento</button>
+        </div>
 
 
-<!-- Modal criar evento -->
+        <!-- Modal criar evento -->
         <div class="modal-overlay" *ngIf="showModal">
             <div class="modal">
                 <div class="modal-title">
@@ -20,10 +14,10 @@
 
                 <h5 class="modal-text">Título</h5>
                 <input type="text" [(ngModel)]="newEvent.title">
-               
+
                 <h5 class="modal-text">Data de Início</h5>
                 <input type="date" [(ngModel)]="newEvent.startDate">
-                
+
                 <h5 class="modal-text">Data de Fim</h5>
                 <input type="date" [(ngModel)]="newEvent.endDate">
 
@@ -39,17 +33,11 @@
                 </div>
             </div>
         </div>
-        <app-event-view 
-            [event]="selectedEvent" 
-            [visible]="showViewModal"
-            (close)="showViewModal = false"
+        <app-event-view [event]="selectedEvent" [visible]="showViewModal" (close)="showViewModal = false"
             (edit)="openEditModal($event)">
         </app-event-view>
         <div class="calendar-main">
-            <full-calendar
-             #fullcalendar 
-            [options]="calendarOptions"
-              [events]="eventsArray"></full-calendar>
+            <full-calendar #fullcalendar [options]="calendarOptions" [events]="eventsArray"></full-calendar>
         </div>
     </div>
 </div>

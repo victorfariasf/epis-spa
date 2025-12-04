@@ -11,10 +11,9 @@ const routes: Routes = [
   {path: 'auth/login', component: LoginComponent },
   {path: 'auth/register', component: RegisterComponent},
   {path: 'main', component: LayoutPrincipalComponent, children: [
-    {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
-  ]},
+    {path: '', redirectTo: 'calendar', pathMatch: 'full'},
     { path: 'calendar', component: CalendarComponent },
-  { path: '**', redirectTo: '/calendar' }
+  ]},
 ];
 
 @NgModule({
