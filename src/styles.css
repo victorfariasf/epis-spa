@@ -52,13 +52,19 @@ a:hover{
     cursor: pointer;
 }
 
-input{
+input:not(.form-check-input){
     height: 48px !important;
     font-family: "Montserrat", sans-serif !important;
     vertical-align: middle !important;
     padding: 8px;
     border: 1px solid rgba(0, 0, 0, 0.459) !important;
-
 }
+
+
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
