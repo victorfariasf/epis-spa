@@ -6,6 +6,7 @@ import { LayoutPrincipalComponent } from './layout/layout-principal/layout-princ
 import { CalendarComponent } from './calendar/calendar.component';
 //import { pathToFileURL } from 'url';
 
+
 const routes: Routes = [
   {path: '', redirectTo: 'auth/login', pathMatch: 'full'},
   {path: 'auth/login', component: LoginComponent },
