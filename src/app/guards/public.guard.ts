@@ -11,8 +11,8 @@ export class PublicGuard implements CanActivate {
   constructor(private auth: AuthService, private router: Router){}
 
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+    console.log(this.auth.estaLogado())
       if(this.auth.estaLogado()){
-        console.log("Usuário logado")
         return this.router.createUrlTree(['/main']);
       }
 

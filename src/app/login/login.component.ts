@@ -34,10 +34,6 @@ export class LoginComponent implements OnInit {
       "email": this.loginForm.get('email')?.value!,
       "senha": this.loginForm.get('password')?.value!
     }
-    // const email = this.loginForm.get('email')?.value!;
-    // const password = this.loginForm.get('password')?.value!;
-
-    console.log(payload);
 
     this.authService.authLogin(payload).subscribe({
       next: (rsp) => {
@@ -45,6 +41,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('email', rsp.email);
         localStorage.setItem('senha', rsp.senha);
         localStorage.setItem('logado', "true");
+        this.router.navigate(['/main']);
       },
       error: (err) => {
         this.errorMessage =
@@ -52,20 +49,6 @@ export class LoginComponent implements OnInit {
       }
     })
 
-    // this.authService.login(email, password).subscribe({
-    //   next: (response) => {
-    //     this.router.navigateByUrl('/main');
-    //      // 🔐 Salva usuário e token
-    //   this.authService.salvarUsuario(response);
-
-    //   // 🚀 Redireciona
-    //   this.router.navigateByUrl('/main');
-    //   },
-    //   error: (err) => {
-    //     this.errorMessage =
-    //       err.error?.message || 'Email ou senha inválidos';
-    //   }
-    // });
   }
 
   esqueciSenha() {
