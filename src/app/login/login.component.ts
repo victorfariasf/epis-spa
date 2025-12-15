@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -9,31 +10,50 @@ import { Router } from '@angular/router';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private router: Router) { }
+  errorMessage = '';
 
   public loginForm = new FormGroup({
-    login: new FormControl("",[Validators.required]),
-    password: new FormControl("", [Validators.required])
+    email: new FormControl('', [Validators.required, Validators.email]),
+    password: new FormControl('', [Validators.required])
   });
 
-  ngOnInit(): void {
+  constructor(
+    private router: Router,
+    private authService: AuthService
+  ) {}
 
+  ngOnInit(): void {}
+
+  entrar() {
+    if (this.loginForm.invalid) {
+      this.loginForm.markAllAsTouched();
+      return;
+    }
+
+    const email = this.loginForm.get('email')?.value!;
+    const password = this.loginForm.get('password')?.value!;
+
+    this.authService.login(email, password).subscribe({
+      next: (response) => {
+        this.router.navigateByUrl('/main');
+         // 🔐 Salva usuário e token
+      this.authService.salvarUsuario(response);
+
+      // 🚀 Redireciona
+      this.router.navigateByUrl('/main');
+      },
+      error: (err) => {
+        this.errorMessage =
+          err.error?.message || 'Email ou senha inválidos';
+      }
+    });
   }
 
-  entrar(){
-    const login = {
-      "login": this.loginForm.get('login')?.value,
-      "password": this.loginForm.get('password')?.value
-    };
-    console.log(login);
-    this.router.navigateByUrl("/main");
+  esqueciSenha() {
+    // this.router.navigateByUrl('/auth/esqueci-senha');
   }
 
-  esqueciSenha(){
-    //this.router.navigateByUrl("/auth/esqueci-senha");
-  }
-
-  registrarConta(){
-    this.router.navigateByUrl("/auth/register");
+  registrarConta() {
+    this.router.navigateByUrl('/auth/register');
   }
 }
