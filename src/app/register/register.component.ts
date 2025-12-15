@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { RegisterService } from '../services/register.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -15,24 +16,28 @@ export class RegisterComponent implements OnInit {
     senha: new FormControl("", Validators.required)
   });
 
-  constructor(private register: RegisterService) { }
+  constructor(private register: RegisterService, private router: Router) { }
 
   ngOnInit(): void {
   }
 
   fazerRegistro(){
     const registerPayload = {
-      "name": this.registerForm.get('nome')?.value,
+      "nome": this.registerForm.get('nome')?.value,
       "email": this.registerForm.get('email')?.value,
       "senha": this.registerForm.get('senha')?.value
     }
 
+    console.log(registerPayload);
+
     this.register.register(registerPayload).subscribe({
       next: (rsp) => {
         console.log("Registro feito com sucesso");
+        this.router.navigateByUrl("/auth/login");
       },
       error: (err) => {
         console.log("Erro ao concluir registro");
+        console.log(err);
       }
     }
     )

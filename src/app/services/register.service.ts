@@ -9,10 +9,10 @@ export class RegisterService {
 
   constructor(private http: HttpClient) { }
 
-  private api = "localhost:3000"
+  private api = "http://localhost:3000"
 
   public register(payload: any): Observable<any> {
-    const registerUrl = `${this.api}/autent/register`;
+    const registerUrl = `${this.api}/api/register`;
 
     return this.http.post<any>(registerUrl, payload);
   }
