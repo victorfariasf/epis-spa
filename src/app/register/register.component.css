@@ -1,0 +1,12 @@
+#caixa-principal{
+    background-color: #1A1A1A;
+    height: 100%;
+    width: 100%;
+}
+
+#form{
+    background-color: #FFFFFF;
+    width: 776px;
+    height: 600px;
+    border-radius: 24.56px;
+}
