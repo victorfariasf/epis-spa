@@ -11,7 +11,7 @@
         <h5 class="event-view-modal__text"><strong>Duração:</strong>
             {{ event?.start | date:'HH:mm' }} - {{ event?.end | date:'HH:mm' }}
         </h5>
-         <h5 class="event-view-modal__text"><strong>Autor:  Nome do autor</strong></h5>
+         
       </div>
     </div>
 
@@ -23,7 +23,7 @@
         <h5 class="event-view-modal__text"><strong>Título:</strong> {{ event?.title }}</h5>
         <h5 class="event-view-modal__text"><strong>Início:</strong> {{ event?.start | date:'dd/MM/yyyy HH:mm' }}</h5>
         <h5 *ngIf="event?.end"><strong>Fim:</strong> {{ event?.end | date:'dd/MM/yyyy HH:mm' }}</h5>
-        <h5 class="event-view-modal__text"><strong>Autor:  Nome do autor</strong></h5>
+        
      </div> 
     </ng-template>
 

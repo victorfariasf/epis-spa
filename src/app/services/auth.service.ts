@@ -23,6 +23,32 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
+   private USER_KEY = 'usuarioLogado';
+
+  salvarUsuario(usuario: any) {
+    const userData = {
+      id: usuario.id,
+      nome: usuario.nome,
+      email: usuario.email
+    };
+
+    localStorage.setItem(this.USER_KEY, JSON.stringify(userData));
+  }
+
+  obterUsuario() {
+    const data = localStorage.getItem(this.USER_KEY);
+    return data ? JSON.parse(data) : null;
+  }
+
+  obterUserId(): number | null {
+    const user = this.obterUsuario();
+    return user ? user.id : null;
+  }
+
+  logout() {
+    localStorage.removeItem(this.USER_KEY);
+  }
+
   login(email: string, senha: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.apiUrl}/login`, {
       email,
@@ -34,20 +60,11 @@ export class AuthService {
       })
     );
   }
-    salvarUsuario(dados: any) {
-    localStorage.setItem('usuario', JSON.stringify(dados.user));
-    localStorage.setItem('token', dados.token);
-    }
 
     getUsuario() {
       const user = localStorage.getItem('usuario');
       return user ? JSON.parse(user) : null;
     }
-
-  logout(): void {
-    localStorage.removeItem('token');
-    localStorage.removeItem('usuario');
-  }
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');

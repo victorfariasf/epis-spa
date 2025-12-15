@@ -25,29 +25,29 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   entrar() {
-    if (this.loginForm.invalid) {
-      this.loginForm.markAllAsTouched();
-      return;
-    }
+  if (this.loginForm.invalid) {
+    this.loginForm.markAllAsTouched();
+    return;
+  }
 
-    const email = this.loginForm.get('email')?.value!;
-    const password = this.loginForm.get('password')?.value!;
+  const email = this.loginForm.get('email')?.value!;
+  const password = this.loginForm.get('password')?.value!;
 
-    this.authService.login(email, password).subscribe({
-      next: (response) => {
-        this.router.navigateByUrl('/main');
-         // 🔐 Salva usuário e token
+  this.authService.login(email, password).subscribe({
+    next: (response) => {
+
+      // 🔐 Salva id, nome e email
       this.authService.salvarUsuario(response);
 
       // 🚀 Redireciona
       this.router.navigateByUrl('/main');
-      },
-      error: (err) => {
-        this.errorMessage =
-          err.error?.message || 'Email ou senha inválidos';
-      }
-    });
-  }
+    },
+    error: (err) => {
+      this.errorMessage =
+        err.error?.message || 'Email ou senha inválidos';
+    }
+  });
+}
 
   esqueciSenha() {
     // this.router.navigateByUrl('/auth/esqueci-senha');

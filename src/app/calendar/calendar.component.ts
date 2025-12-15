@@ -5,6 +5,9 @@ import { CalendarOptions, DatesSetArg, DayHeaderContentArg } from '@fullcalendar
 import timeGridPlugin from '@fullcalendar/timegrid';
 import { EventInput } from '@fullcalendar/core';
 import { FullCalendarComponent } from '@fullcalendar/angular';
+import { HttpClient } from '@angular/common/http';
+import { AfterViewInit } from '@angular/core';
+
 
 interface AppEvent extends EventInput {
   // title?: string; start?: string | Date; end?: string | Date; color?: string; etc.
@@ -15,9 +18,8 @@ interface AppEvent extends EventInput {
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.css']
 })
-export class CalendarComponent implements OnInit {
+export class CalendarComponent implements OnInit, AfterViewInit {
   @ViewChild('fullcalendar') fullcalendar!: FullCalendarComponent;
-
   showModal = false;
   showViewModal = false;
   editVisible = false;
@@ -38,6 +40,10 @@ export class CalendarComponent implements OnInit {
       endTime: ''
     };
 
+ngAfterViewInit() {
+  setTimeout(() => this.loadUserEvents(), 0);
+}
+
   compareDates(d1: Date | string | null, d2: Date | string | null): boolean {
     if (!d1 || !d2) return false;
 
@@ -53,13 +59,16 @@ export class CalendarComponent implements OnInit {
 
   highContrast = false;
 
-  constructor(private el: ElementRef, private renderer: Renderer2) { }
+  constructor( 
+  private el: ElementRef,
+  private renderer: Renderer2,
+  private http: HttpClient) { }
 
   ngOnInit() {
     // Lê o estado salvo no navegador
+    console.log('CalendarComponent ngOnInit');
     const savedContrast = localStorage.getItem('highContrast');
     if (savedContrast === 'true') {
-
       this.highContrast = true;
       this.renderer.addClass(document.body, 'high-contrast');
       this.renderer.addClass(this.el.nativeElement, 'high-contrast');
@@ -69,6 +78,40 @@ export class CalendarComponent implements OnInit {
   ngOnChanges(){
     
   }
+  loadUserEvents() {
+  const usuarioRaw = localStorage.getItem('usuarioLogado');
+  if (!usuarioRaw) return;
+
+  const usuario = JSON.parse(usuarioRaw);
+  const userId = usuario.id;
+  if (!userId) return;
+
+  this.http.get<any[]>(`http://localhost:3000/api/eventos/`).subscribe({
+    next: (eventos) => {
+      console.log('Eventos recebidos da API:', eventos);
+
+      
+
+      const formattedEvents: EventInput[] = eventos.map(e => ({
+        id: String(e.id),
+        title: e.titulo,
+        start: this.formatDate(e.dataInicio),
+        end: this.formatDate(e.dataFim),
+        allDay: false
+      }));
+
+      // Atualiza o array usado pelo Angular
+      this.eventsArray = formattedEvents;
+    },
+    error: (err) => console.error('Erro ao carregar eventos', err)
+  });
+}
+  private formatDate(data: string | null): string | undefined {
+    console.log(data)
+  if (!data) return undefined;
+  return new Date(data.replace(' ', 'T')).toISOString();
+}
+
 
 
   toggleContrast(state: boolean) {
@@ -82,12 +125,7 @@ export class CalendarComponent implements OnInit {
     }
     localStorage.setItem('highContrast', String(state));
   }
-  eventsArray: EventInput[] = [
-    { title: 'Aula de APS', start: '2025-11-27T08:00:00', end: '2025-11-27T12:00:00' },
-    { title: 'Evento rápido', start: '2025-12-05T09:30:00' }, // sem end = duração padrão (depende)
-    { title: 'Dia inteiro', start: '2025-12-10', allDay: true }, // all-day
-    { title: 'Aula de matematica', start: '2025-12-03T08:00:00', end: '2025-12-03T09:00:00' }
-  ];
+  eventsArray: EventInput[] = [];
 
 
   // Tipando como 'any' para evitar erro
@@ -217,45 +255,55 @@ export class CalendarComponent implements OnInit {
   }
 
   saveEvent() {
-    if (!this.newEvent.title || !this.newEvent.startDate || !this.newEvent.startTime) {
-      alert('Preencha ao menos título, data e hora de início.');
-      return;
-    }
-
-    // Se não houver data final, assume apenas o dia de início
-    const startDate = new Date(this.newEvent.startDate);
-    const endDate = this.newEvent.endDate ? new Date(this.newEvent.endDate) : startDate;
-
-    // Array para guardar os eventos
-    const eventsToAdd: EventInput[] = [];
-
-    // Loop de cada dia
-    for (let d = new Date(startDate); d <= endDate; d.setDate(d.getDate() + 1)) {
-      // Formata o dia atual
-      const yyyy = d.getFullYear();
-      const mm = String(d.getMonth() + 1).padStart(2, '0');
-      const dd = String(d.getDate()).padStart(2, '0');
-
-      console.log("yy" + yyyy + "mm" + mm + "dd" + dd)
-
-      // Combina com as horas fornecidas
-      const start = `${yyyy}-${mm}-${dd}T${this.newEvent.startTime}`;
-      const end = this.newEvent.endTime ? `${yyyy}-${mm}-${dd}T${this.newEvent.endTime}` : undefined;
-
-      eventsToAdd.push({
-        title: this.newEvent.title,
-        start: start,
-        end: end
-      });
-    }
-
-    // Adiciona todos os eventos no array e no calendário
-    this.eventsArray.push(...eventsToAdd);
-
-    const api = this.fullcalendar.getApi();
-    eventsToAdd.forEach(ev => api.addEvent(ev));
-
-    this.closeModal();
+  if (!this.newEvent.title || !this.newEvent.startDate || !this.newEvent.startTime) {
+    alert('Preencha ao menos título, data e hora de início.');
+    return;
   }
+
+  // 🔐 pega usuário do localStorage
+  const usuarioRaw = localStorage.getItem('usuarioLogado');
+  if (!usuarioRaw) {
+    alert('Usuário não logado');
+    return;
+  }
+
+  const usuario = JSON.parse(usuarioRaw);
+  const usuarioId = usuario.id;
+
+  // 🕒 monta data/hora início
+  const dataInicio = `${this.newEvent.startDate} ${this.newEvent.startTime}:00`;
+
+  // 🕒 monta data/hora fim
+  let dataFim: string | null = null;
+  if (this.newEvent.endDate && this.newEvent.endTime) {
+    dataFim = `${this.newEvent.endDate} ${this.newEvent.endTime}:00`;
+  }
+
+  // 📦 body da requisição
+  const body = {
+    titulo: this.newEvent.title,
+    dataInicio,
+    dataFim,
+    usuarioId
+  };
+
+  console.log('Enviando evento:', body);
+
+  // 🚀 POST para API
+  this.http.post('http://localhost:3000/api/eventos', body).subscribe({
+    next: () => {
+      // 🔄 recarrega eventos do usuário
+      this.loadUserEvents();
+
+      // 🧹 fecha modal e limpa formulário
+      this.closeModal();
+    },
+    error: (err) => {
+      console.error('Erro ao salvar evento', err);
+      alert('Erro ao salvar evento');
+    }
+  });
+}
+
 }
 
