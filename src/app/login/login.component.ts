@@ -35,12 +35,11 @@ export class LoginComponent implements OnInit {
 
     this.authService.login(email, password).subscribe({
       next: (response) => {
-        this.router.navigateByUrl('/main');
-         // 🔐 Salva usuário e token
-      this.authService.salvarUsuario(response);
+        // 🔐 salva primeiro
+        this.authService.salvarUsuario(response);
 
-      // 🚀 Redireciona
-      this.router.navigateByUrl('/main');
+        // 🚀 redireciona para a rota FILHA
+        this.router.navigateByUrl('/main/calendar');
       },
       error: (err) => {
         this.errorMessage =

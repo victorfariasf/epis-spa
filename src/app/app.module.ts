@@ -17,6 +17,8 @@ import { EventViewComponent } from './event-view/event-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
 import { EditarPerfilComponent } from './layout/editar-perfil/editar-perfil.component';
+import { TurmasComponent } from './turmas/turmas.component';
+
 
 @NgModule({
   declarations: [
@@ -27,7 +29,8 @@ import { EditarPerfilComponent } from './layout/editar-perfil/editar-perfil.comp
     CalendarComponent,
     AccessibilityButtonComponent,
     EventViewComponent,
-    EditarPerfilComponent
+    EditarPerfilComponent,
+    TurmasComponent
   ],
   imports: [
     BrowserModule,
@@ -38,7 +41,8 @@ import { EditarPerfilComponent } from './layout/editar-perfil/editar-perfil.comp
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    NgbCollapseModule
+    NgbCollapseModule,
+    FormsModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
