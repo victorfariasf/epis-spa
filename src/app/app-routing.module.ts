@@ -4,14 +4,16 @@ import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
 import { LayoutPrincipalComponent } from './layout/layout-principal/layout-principal.component';
 import { CalendarComponent } from './calendar/calendar.component';
+import { PublicGuard } from './guards/public.guard';
+import { AuthGuardGuard } from './guards/auth-guard.guard';
 //import { pathToFileURL } from 'url';
 
 
 const routes: Routes = [
   {path: '', redirectTo: 'auth/login', pathMatch: 'full'},
-  {path: 'auth/login', component: LoginComponent },
-  {path: 'auth/register', component: RegisterComponent},
-  {path: 'main', component: LayoutPrincipalComponent, children: [
+  {path: 'auth/login', component: LoginComponent, canActivate: [PublicGuard] },
+  {path: 'auth/register', component: RegisterComponent, canActivate: [PublicGuard]},
+  {path: 'main', component: LayoutPrincipalComponent, canActivate: [AuthGuardGuard] , children: [
     {path: '', redirectTo: 'calendar', pathMatch: 'full'},
     { path: 'calendar', component: CalendarComponent },
   ]},

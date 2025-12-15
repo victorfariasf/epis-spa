@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditarPerfilComponent } from '../editar-perfil/editar-perfil.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { aU } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-layout-principal',
@@ -11,7 +13,7 @@ export class LayoutPrincipalComponent implements OnInit {
 
   public highContrast: boolean = false;
   public isMenuCollapsed = true;
-  constructor(private renderer: Renderer2, private el: ElementRef, private modalService: NgbModal) { }
+  constructor(private renderer: Renderer2, private el: ElementRef, private modalService: NgbModal, private auth: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -55,6 +57,6 @@ export class LayoutPrincipalComponent implements OnInit {
   }
 
   logout(){
-    console.log("saiu")
+    this.auth.logout();
   }
 }
