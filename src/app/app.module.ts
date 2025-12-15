@@ -4,6 +4,7 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule} from '@angular/forms';
 import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
+import { HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { LayoutPrincipalComponent } from './layout/layout-principal/layout-principal.component';
@@ -36,7 +37,8 @@ import { EditarPerfilComponent } from './layout/editar-perfil/editar-perfil.comp
     FullCalendarModule,
     FormsModule,
     BrowserAnimationsModule,
-    NgbCollapseModule
+    NgbCollapseModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]
