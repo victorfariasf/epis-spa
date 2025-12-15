@@ -3,7 +3,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 import { AppRoutingModule } from './app-routing.module';
 import { ReactiveFormsModule} from '@angular/forms';
-
+import { NgbCollapseModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppComponent } from './app.component';
 import { LayoutPrincipalComponent } from './layout/layout-principal/layout-principal.component';
@@ -16,6 +16,7 @@ import { FormsModule } from '@angular/forms';
 import { EventViewComponent } from './event-view/event-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from '@angular/common/http';
+import { EditarPerfilComponent } from './layout/editar-perfil/editar-perfil.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { HttpClientModule } from '@angular/common/http';
     CalendarComponent,
     AccessibilityButtonComponent,
     EventViewComponent,
+    EditarPerfilComponent
   ],
   imports: [
     BrowserModule,
@@ -36,6 +38,7 @@ import { HttpClientModule } from '@angular/common/http';
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    NgbCollapseModule
   ],
   providers: [],
   bootstrap: [AppComponent]
