@@ -13,9 +13,13 @@ h6{
     font-weight: 400;
 }
 #login-box{
-
+    padding: 24px;
     border-radius: 10%;
-    width: 467.2766418457031px;
-    height: 505.940185546875px;
+    width: 600px;
+    height: 700px;
     background-color: #FFFFFF;
+}
+
+#form{
+    width: 400px !important;
 }
