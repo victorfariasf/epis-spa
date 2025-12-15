@@ -15,6 +15,7 @@ import { AccessibilityButtonComponent } from './accessibility-button/accessibili
 import { FormsModule } from '@angular/forms';
 import { EventViewComponent } from './event-view/event-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     RegisterComponent,
     CalendarComponent,
     AccessibilityButtonComponent,
-    EventViewComponent
+    EventViewComponent,
   ],
   imports: [
     BrowserModule,
@@ -34,6 +35,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
     FullCalendarModule,
     FormsModule,
     BrowserAnimationsModule,
+    HttpClientModule,
   ],
   providers: [],
   bootstrap: [AppComponent]
