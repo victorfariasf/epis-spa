@@ -23,9 +23,9 @@ export class RegisterComponent implements OnInit {
 
   fazerRegistro(){
     const registerPayload = {
-      "nome": this.registerForm.get('nome')?.value,
-      "email": this.registerForm.get('email')?.value,
-      "senha": this.registerForm.get('senha')?.value
+      "nome": this.registerForm.get('nome')?.value.toString(),
+      "email": this.registerForm.get('email')?.value.toString(),
+      "senha": this.registerForm.get('senha')?.value.toString()
     }
 
     console.log(registerPayload);

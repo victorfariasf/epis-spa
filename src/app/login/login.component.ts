@@ -30,23 +30,42 @@ export class LoginComponent implements OnInit {
       return;
     }
 
-    const email = this.loginForm.get('email')?.value!;
-    const password = this.loginForm.get('password')?.value!;
+    const payload = {
+      "email": this.loginForm.get('email')?.value!,
+      "senha": this.loginForm.get('password')?.value!
+    }
+    // const email = this.loginForm.get('email')?.value!;
+    // const password = this.loginForm.get('password')?.value!;
 
-    this.authService.login(email, password).subscribe({
-      next: (response) => {
-        this.router.navigateByUrl('/main');
-         // 🔐 Salva usuário e token
-      this.authService.salvarUsuario(response);
+    console.log(payload);
 
-      // 🚀 Redireciona
-      this.router.navigateByUrl('/main');
+    this.authService.authLogin(payload).subscribe({
+      next: (rsp) => {
+        localStorage.setItem('usuario', rsp.nome);
+        localStorage.setItem('email', rsp.email);
+        localStorage.setItem('senha', rsp.senha);
+        this.router.navigateByUrl("/main");
       },
       error: (err) => {
         this.errorMessage =
           err.error?.message || 'Email ou senha inválidos';
       }
-    });
+    })
+
+    // this.authService.login(email, password).subscribe({
+    //   next: (response) => {
+    //     this.router.navigateByUrl('/main');
+    //      // 🔐 Salva usuário e token
+    //   this.authService.salvarUsuario(response);
+
+    //   // 🚀 Redireciona
+    //   this.router.navigateByUrl('/main');
+    //   },
+    //   error: (err) => {
+    //     this.errorMessage =
+    //       err.error?.message || 'Email ou senha inválidos';
+    //   }
+    // });
   }
 
   esqueciSenha() {

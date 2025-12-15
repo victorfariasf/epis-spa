@@ -4,8 +4,18 @@
 </div>
 
 <div class="modal-body">
-    <h2>__nome_do_usuario__</h2>
-    <h2>__email_do_usuario</h2>
+    <div class="d-flex justify-content-start gap-4 align-items-end">
+        <h2>Nome: </h2>
+        <h3>{{usuarioDados.nome | titlecase}}</h3>
+    </div>
+    <div class="d-flex justify-content-start gap-4">
+        <h2>Email: </h2>
+        <h3>{{usuarioDados.email}}</h3>
+    </div>
+    <div class="d-flex justify-content-start gap-4">
+        <h2>Senha: </h2>
+        <h3>{{usuarioDados.senha}}</h3>
+    </div>
 </div>
 
 <div class="modal-footer">
