@@ -33,8 +33,11 @@
                 </div>
             </div>
         </div>
-        <app-event-view [event]="selectedEvent" [visible]="showViewModal" (close)="showViewModal = false"
-            (edit)="openEditModal($event)">
+        <app-event-view [event]="selectedEvent" 
+        [visible]="showViewModal"
+         (close)="showViewModal = false"
+            (edit)="openEditModal($event)"
+             (delete)="deleteEvent($event)">
         </app-event-view>
         <div class="calendar-main">
           <full-calendar #fullcalendar [options]="calendarOptions" [events]="eventsArray"></full-calendar>

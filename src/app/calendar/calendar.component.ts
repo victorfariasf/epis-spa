@@ -211,6 +211,7 @@ ngAfterViewInit() {
     }, eventClick: (arg: any) => {
       this.selectedEvent = {
         title: arg.event.title,
+         id: arg.event.id,
         start: arg.event.start,
         end: arg.event.end
       };
@@ -301,6 +302,41 @@ ngAfterViewInit() {
     error: (err) => {
       console.error('Erro ao salvar evento', err);
       alert('Erro ao salvar evento');
+    }
+  });
+}
+deleteEvent(eventId: number) {
+  const usuarioRaw = localStorage.getItem('usuarioLogado');
+  if (!usuarioRaw) {
+    alert('Usuário não logado');
+    return;
+  }
+
+  const usuario = JSON.parse(usuarioRaw);
+  const usuarioId = usuario.id;
+
+  this.http.delete(
+    `http://localhost:3000/api/eventos/${eventId}`,
+    {
+      body: { usuarioId }   // 👈 IMPORTANTE
+    }
+  ).subscribe({
+    next: () => {
+      // remove do FullCalendar
+      const api = this.fullcalendar.getApi();
+      const event = api.getEventById(String(eventId));
+      if (event) event.remove();
+
+      // remove do array do Angular
+      this.eventsArray = this.eventsArray.filter(
+        e => e.id !== String(eventId)
+      );
+
+      this.showViewModal = false;
+    },
+    error: (err) => {
+      console.error('Erro ao excluir evento', err);
+      alert(err.error?.error || 'Erro ao excluir evento');
     }
   });
 }

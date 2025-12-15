@@ -12,6 +12,16 @@ export class EventViewComponent implements OnInit {
   @Input() editVisible: boolean = false;
   @Output() close = new EventEmitter<void>(); // emite fechamento
   @Output() edit = new EventEmitter<any>();
+  @Output() delete = new EventEmitter<number>();
+
+confirmDelete() {
+  if (!this.event?.id) return;
+
+  const ok = confirm('Tem certeza que deseja excluir este evento?');
+  if (!ok) return;
+
+  this.delete.emit(this.event.id);
+}
 
   constructor() {}
 

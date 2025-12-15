@@ -31,7 +31,12 @@
       <button class="btn-edit" (click)="openEdit()">Editar</button>
       <div class="event-view-modal__buttons2">
       <button class="btn-cancel">Adiar</button>
-      <button class="btn-delete">Excluir Evento</button>
+      <button
+        class="btn-delete"
+        type="button"
+        (click)="confirmDelete()">
+        Excluir Evento
+      </button>
       </div>
     </div>
 
