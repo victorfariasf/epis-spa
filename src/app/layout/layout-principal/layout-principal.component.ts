@@ -41,8 +41,9 @@ export class LayoutPrincipalComponent implements OnInit {
 
   abrirEditarUsuario(){
     let usuarioTeste = {
-      "nome": "Victor",
-      "email": "victor@gmail.com"
+      "nome": localStorage.getItem("usuario"),
+      "email": localStorage.getItem("email"),
+      "senha": localStorage.getItem("senha")
     }
     console.log(usuarioTeste);
     const modalRef = this.modalService.open(EditarPerfilComponent);
@@ -51,7 +52,9 @@ export class LayoutPrincipalComponent implements OnInit {
       usuarioTeste = values;
       console.log(usuarioTeste);
     })
-
   }
 
+  logout(){
+    console.log("saiu")
+  }
 }
