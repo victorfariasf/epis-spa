@@ -1,6 +1,8 @@
 import { Component, ElementRef, OnInit, Renderer2 } from '@angular/core';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { EditarPerfilComponent } from '../editar-perfil/editar-perfil.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { aU } from '@fullcalendar/core/internal-common';
 
 @Component({
   selector: 'app-layout-principal',
@@ -11,7 +13,7 @@ export class LayoutPrincipalComponent implements OnInit {
 
   public highContrast: boolean = false;
   public isMenuCollapsed = true;
-  constructor(private renderer: Renderer2, private el: ElementRef, private modalService: NgbModal) { }
+  constructor(private renderer: Renderer2, private el: ElementRef, private modalService: NgbModal, private auth: AuthService) { }
 
   ngOnInit(): void {
   }
@@ -41,8 +43,9 @@ export class LayoutPrincipalComponent implements OnInit {
 
   abrirEditarUsuario(){
     let usuarioTeste = {
-      "nome": "Victor",
-      "email": "victor@gmail.com"
+      "nome": localStorage.getItem("usuario"),
+      "email": localStorage.getItem("email"),
+      "senha": localStorage.getItem("senha")
     }
     console.log(usuarioTeste);
     const modalRef = this.modalService.open(EditarPerfilComponent);
@@ -51,7 +54,9 @@ export class LayoutPrincipalComponent implements OnInit {
       usuarioTeste = values;
       console.log(usuarioTeste);
     })
-
   }
 
+  logout(){
+    this.auth.logout();
+  }
 }
