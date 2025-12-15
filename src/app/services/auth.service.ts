@@ -34,10 +34,19 @@ export class AuthService {
       })
     );
   }
+    salvarUsuario(dados: any) {
+    localStorage.setItem('usuario', JSON.stringify(dados.user));
+    localStorage.setItem('token', dados.token);
+    }
+
+    getUsuario() {
+      const user = localStorage.getItem('usuario');
+      return user ? JSON.parse(user) : null;
+    }
 
   logout(): void {
     localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('usuario');
   }
 
   isAuthenticated(): boolean {
