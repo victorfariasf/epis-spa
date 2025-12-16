@@ -56,5 +56,6 @@ export class LayoutPrincipalComponent implements OnInit {
 
   logout(){
     this.auth.logout();
+     localStorage.clear();
   }
 }

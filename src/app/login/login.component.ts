@@ -41,6 +41,7 @@ export class LoginComponent implements OnInit {
         localStorage.setItem('email', rsp.email);
         localStorage.setItem('senha', rsp.senha);
         localStorage.setItem('logado', "true");
+        localStorage.setItem('usuarioLogado',rsp.id);
         this.router.navigate(['/main']);
       },
       error: (err) => {

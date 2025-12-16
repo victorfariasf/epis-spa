@@ -84,7 +84,7 @@ ngAfterViewInit() {
 
   const usuario = JSON.parse(usuarioRaw);
   const userId = usuario.id;
-  if (!userId) return;
+  //if (!userId) return;
 
   this.http.get<any[]>(`http://localhost:3000/api/eventos/`).subscribe({
     next: (eventos) => {
