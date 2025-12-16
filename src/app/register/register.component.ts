@@ -28,16 +28,12 @@ export class RegisterComponent implements OnInit {
       "senha": this.registerForm.get('senha')?.value.toString()
     }
 
-    console.log(registerPayload);
 
     this.register.register(registerPayload).subscribe({
       next: (rsp) => {
-        console.log("Registro feito com sucesso");
         this.router.navigateByUrl("/auth/login");
       },
       error: (err) => {
-        console.log("Erro ao concluir registro");
-        console.log(err);
       }
     }
     )

@@ -17,6 +17,7 @@ import { FormsModule } from '@angular/forms';
 import { EventViewComponent } from './event-view/event-view.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { EditarPerfilComponent } from './layout/editar-perfil/editar-perfil.component';
+import { EsqueciSenhaComponent } from './esqueci-senha/esqueci-senha.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +28,8 @@ import { EditarPerfilComponent } from './layout/editar-perfil/editar-perfil.comp
     CalendarComponent,
     AccessibilityButtonComponent,
     EventViewComponent,
-    EditarPerfilComponent
+    EditarPerfilComponent,
+    EsqueciSenhaComponent
   ],
   imports: [
     BrowserModule,
