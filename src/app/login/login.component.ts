@@ -52,7 +52,7 @@ export class LoginComponent implements OnInit {
   }
 
   esqueciSenha() {
-    // this.router.navigateByUrl('/auth/esqueci-senha');
+    this.router.navigateByUrl('/auth/esqueci-senha');
   }
 
   registrarConta() {

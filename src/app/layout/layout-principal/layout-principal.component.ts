@@ -47,12 +47,10 @@ export class LayoutPrincipalComponent implements OnInit {
       "email": localStorage.getItem("email"),
       "senha": localStorage.getItem("senha")
     }
-    console.log(usuarioTeste);
     const modalRef = this.modalService.open(EditarPerfilComponent);
     modalRef.componentInstance.usuarioDados = usuarioTeste;
     modalRef.result.then((values) => {
       usuarioTeste = values;
-      console.log(usuarioTeste);
     })
   }
 

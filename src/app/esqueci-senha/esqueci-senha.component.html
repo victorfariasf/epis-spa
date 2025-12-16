@@ -1,0 +1,41 @@
+<div id="caixa-principal" class="d-flex flex-column justify-content-center align-items-center gap-5 p-4">
+    <div id="logo">
+        <img src="../../assets/epis-texto.svg" alt="logo-epis">
+    </div>
+
+    <div *ngIf="page === 1" id="login-box" class="d-flex flex-column align-items-center justify-content-center">
+        <form [formGroup]="emailForm" (ngSubmit)="enviarEmail()" class="w-100 d-flex flex-column gap-3" id="form">
+            <header class="w-100 mb-5 text-center">
+                <h1>Esqueceu a senha?</h1>
+            </header>
+            <label class="w-100">
+                <h3 class="text-secondary">Tudo bem, isso acontece! Por favor, informe o e-mail associado à sua conta.</h3>
+            </label>
+            <input type="email" class="w-100" formControlName="email" placeholder="Digite seu email">
+            <button class="btn epis-btn" type="submit">Continuar</button>
+        </form>
+    </div>
+
+    <div *ngIf="page === 2" id="login-box" class="d-flex flex-column align-items-center justify-content-center">
+        <form [formGroup]="senhaForm" (ngSubmit)="mudarSenha()" class="w-100 d-flex flex-column gap-2" id="form">
+            <header class="w-100 mb-5 text-center">
+                <h1>Crie uma nova senha</h1>
+            </header>
+            <input type="password" class="w-100" formControlName="senha" placeholder="Nova senha">
+            <button class="btn epis-btn" type="submit">Continuar</button>
+        </form>
+    </div>
+
+    <div *ngIf="page === 3" id="login-box" class="d-flex flex-column align-items-center justify-content-center">
+        <div class="w-100 d-flex flex-column gap-2" id="form">
+            <div class="w-100 d-flex justify-content-center">
+                <img src="../../assets/images/sucesso.svg" alt="sucesso">
+            </div>
+            <header class="w-100 mb-5 text-center">
+                <h1>Senha alterada</h1>
+                <h3 class="text-secondary">Sua senha foi alterada com sucesso</h3>
+            </header>
+            <button class="btn epis-btn" routerLink="/auth/login">Voltar ao login</button>
+        </div>
+    </div>
+</div>
